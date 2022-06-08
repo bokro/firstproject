@@ -9,7 +9,10 @@ import com.example.firstproject.dto.ArticleForm;
 import com.example.firstproject.entity.Article;
 import com.example.firstproject.repository.ArticleRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Controller
+@Slf4j
 public class ArticleController {
 
     @Autowired // 스프링부트가 객체 자동 연결해줌
@@ -21,15 +24,17 @@ public class ArticleController {
     }
 
     @PostMapping("/articles/create")
-    public String createArticle(ArticleForm form){
-        System.out.println(form.toString());
+    public String createArticle(ArticleForm form){ //Dto
+        log.info(form.toString());
+        //System.out.println(form.toString()); ->로깅하기
 
         //1.dto to entity
         Article article = form.toEntity();
-        System.out.println(article.toString());
+        log.info(article.toString());
+                    
         //2. entity to repository 
         Article saved =articleRepository.save(article);
-        System.out.println(saved.toString());
+        log.info(saved.toString());
 
         return "articles/view";
     }
